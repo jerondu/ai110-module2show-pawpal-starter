@@ -32,6 +32,33 @@ PawPal+ includes intelligent task management and scheduling capabilities:
 - **Conflict detection** (detect_time_conflicts()): Identifies when multiple tasks are scheduled at the same time and returns warnings, so pet owners can reschedule if needed.
 - **Due date tracking**: Each task tracks its due date, enabling smart recurrence logic and timeline visualization.
 
+## Testing PawPal+
+
+### Run Tests
+
+```bash
+python -m pytest tests/test_pawpal.py -v
+```
+
+### Test Coverage
+
+The test suite includes **11 comprehensive tests** covering:
+
+- **Sorting Correctness** (3 tests): Chronological ordering of tasks by time, handling missing times (pushed to end), and edge-case times (00:00, 23:59)
+- **Recurrence Logic** (3 tests): Auto-creation of daily tasks (+1 day), weekly tasks (+7 days), and non-recurring task handling
+- **Conflict Detection** (3 tests): Identification of single/multiple time-slot conflicts and validation of conflict-free schedules
+- **Core Functionality** (2 tests): Task completion status and pet task management
+
+All tests pass successfully, validating that scheduling, filtering, and recurring task behavior work as designed.
+
+### Confidence Level
+
+**⭐⭐⭐⭐ (4/5 stars)**
+
+**Why:** The test suite validates core scheduling logic, edge cases (missing times, boundary times, non-recurring tasks), and conflict detection. The system handles happy paths reliably. 
+
+**Known limitation:** Conflict detection only flags exact time matches, not overlapping durations—this is a lightweight design tradeoff for MVP performance.
+
 ## Getting started
 
 ### Setup
