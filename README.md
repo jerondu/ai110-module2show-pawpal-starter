@@ -22,6 +22,16 @@ Your final app should:
 - Display the plan clearly (and ideally explain the reasoning)
 - Include tests for the most important scheduling behaviors
 
+## Smarter Scheduling Features
+
+PawPal+ includes intelligent task management and scheduling capabilities:
+
+- **Time-based sorting** (sort_by_time()): Orders tasks chronologically by scheduled time (HH:MM), making it easy to see the day at a glance.
+- **Flexible filtering** (filter_tasks()): Filter by completion status (pending/done) and/or pet name to focus on relevant tasks.
+- **Auto-recurring tasks** (reschedule_task()): When a daily or weekly task is marked complete, a new instance is automatically created for the next occurrence (using Python's timedelta).
+- **Conflict detection** (detect_time_conflicts()): Identifies when multiple tasks are scheduled at the same time and returns warnings, so pet owners can reschedule if needed.
+- **Due date tracking**: Each task tracks its due date, enabling smart recurrence logic and timeline visualization.
+
 ## Getting started
 
 ### Setup

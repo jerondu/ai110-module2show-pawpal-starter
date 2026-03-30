@@ -26,12 +26,17 @@ I added a Schedule class so Planner.generate_schedule could return a schedule, a
 **a. Constraints and priorities**
 
 - What constraints does your scheduler consider (for example: time, priority, preferences)?
+Priority (highest first), scheduled time, completion status, pet name, due date, and frequency (daily/weekly).
+
 - How did you decide which constraints mattered most?
+Priority matters most (it's applied first in generate_schedule()). Time and pet filtering are secondary, called explicitly only when needed.
 
 **b. Tradeoffs**
 
 - Describe one tradeoff your scheduler makes.
+One tradeoff my scheduler makes is that it only checks for exact time matches, not overlapping durations
 - Why is that tradeoff reasonable for this scenario?
+It makes making tasks fast and simple (jut hash tasks by time string) so it works well for a lightweight MVP or when tasks are deliberately scheduled on different hour boundaries.
 
 ---
 
