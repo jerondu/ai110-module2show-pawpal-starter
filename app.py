@@ -89,35 +89,67 @@ if st.button("Add task"):
         else:
             st.error("Selected pet not found.")
 
-if st.session_state.tasks:
-    st.write("Current tasks:")
-    st.table(st.session_state.tasks)
+# Check if there are any tasks across all pets
+total_tasks = sum(len(pet.get_tasks()) for pet in pets)
+if total_tasks > 0:
+    st.success(f"✅ {total_tasks} task(s) added across your pets!")
 else:
     st.info("No tasks yet. Add one above.")
 
 st.divider()
 
 st.subheader("Build Schedule")
-st.caption("This button should call your scheduling logic once you implement it.")
+st.caption("Generate your daily schedule with intelligent sorting and conflict detection.")
 
 if st.button("Generate schedule"):
     scheduler = Scheduler(owner=st.session_state.owner)
     today_schedule = scheduler.generate_schedule(date="today")
 
     if not today_schedule.tasks:
-        st.info("No due tasks to schedule.")
+        st.info("No due tasks to schedule today.")
     else:
-        st.write("## Today's Schedule")
-        for task in today_schedule.tasks:
-            status = "Done" if task.completed else "Pending"
-            st.write(f"- {task.description}, duration {task.duration} min, priority {task.priority}, status {status}")
+        # Sort tasks by time for better display
+        sorted_tasks = scheduler.sort_by_time(today_schedule.tasks)
+        
+        # Check for conflicts
+        conflicts = scheduler.detect_time_conflicts(today_schedule.tasks)
+        
+        if conflicts:
+            st.warning("⚠️ **Scheduling Conflicts Detected!**")
+            st.markdown("**These tasks are scheduled at the same time. Consider rescheduling to avoid overlap:**")
+            for conflict in conflicts:
+                st.error(f"• {conflict}")
+            st.markdown("💡 **Tip:** Use the task editing features to adjust times and regenerate the schedule.")
+            st.divider()
+        
+        st.success(f"✅ **Today's Schedule Generated** ({len(sorted_tasks)} tasks)")
+        
+        # Display tasks in a professional table
+        task_data = []
+        for task in sorted_tasks:
+            status = "✅ Done" if task.completed else "⏳ Pending"
+            time_display = task.time if task.time else "No time set"
+            task_data.append({
+                "Task": task.description,
+                "Time": time_display,
+                "Duration": f"{task.duration} min",
+                "Priority": task.priority,
+                "Status": status
+            })
+        
+        st.table(task_data)
+        
+        # Summary stats
+        pending_count = sum(1 for t in sorted_tasks if not t.completed)
+        completed_count = len(sorted_tasks) - pending_count
+        st.info(f"📊 **Summary:** {pending_count} pending tasks, {completed_count} completed tasks")
 
     st.markdown(
         """
-Suggested approach:
-1. Design your UML (draft).
-2. Create class stubs (no logic).
-3. Implement scheduling behavior.
-4. Connect your scheduler here and display results.
+**Scheduler Features Used:**
+- Priority-based initial scheduling
+- Time-based sorting for chronological display
+- Conflict detection with helpful warnings
+- Professional table layout for easy reading
 """
     )
