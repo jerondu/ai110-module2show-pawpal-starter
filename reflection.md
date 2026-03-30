@@ -5,7 +5,12 @@
 **a. Initial design**
 
 - Briefly describe your initial UML design.
+A user should be able to add tasks to a to-do list for specific days of the week, add a pet, and schedule times to do certain tasks while being able to filter out any time contraints they have.
 - What classes did you include, and what responsibilities did you assign to each?
+Owner class: stores user info and preferences
+Pet class: represents pet(s) and its care needs
+Task class: represents a care activity with duration and priority
+Planner class: generates a daily schedule based on tasks and constraints
 
 **b. Design changes**
 
