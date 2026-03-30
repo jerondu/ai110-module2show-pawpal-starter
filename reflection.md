@@ -15,7 +15,9 @@ Planner class: generates a daily schedule based on tasks and constraints
 **b. Design changes**
 
 - Did your design change during implementation?
+Yes
 - If yes, describe at least one change and why you made it.
+I added a Schedule class so Planner.generate_schedule could return a schedule, and I added a pets attribute to Owner to represent the “has many Pets” relationship. These changes kept the original design but ensured the code was valid and matched the UML.
 
 ---
 
